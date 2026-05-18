@@ -1,0 +1,15 @@
+C:\Users\student\Desktop\francis_p_week1\bin\Debug\net6.0\francis_p_week1.exe
+C:\Users\student\Desktop\francis_p_week1\bin\Debug\net6.0\francis_p_week1.deps.json
+C:\Users\student\Desktop\francis_p_week1\bin\Debug\net6.0\francis_p_week1.runtimeconfig.json
+C:\Users\student\Desktop\francis_p_week1\bin\Debug\net6.0\francis_p_week1.dll
+C:\Users\student\Desktop\francis_p_week1\bin\Debug\net6.0\francis_p_week1.pdb
+C:\Users\student\Desktop\francis_p_week1\obj\Debug\net6.0\francis_p_week1.csproj.AssemblyReference.cache
+C:\Users\student\Desktop\francis_p_week1\obj\Debug\net6.0\francis_p_week1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\student\Desktop\francis_p_week1\obj\Debug\net6.0\francis_p_week1.AssemblyInfoInputs.cache
+C:\Users\student\Desktop\francis_p_week1\obj\Debug\net6.0\francis_p_week1.AssemblyInfo.cs
+C:\Users\student\Desktop\francis_p_week1\obj\Debug\net6.0\francis_p_week1.csproj.CoreCompileInputs.cache
+C:\Users\student\Desktop\francis_p_week1\obj\Debug\net6.0\francis_p_week1.dll
+C:\Users\student\Desktop\francis_p_week1\obj\Debug\net6.0\refint\francis_p_week1.dll
+C:\Users\student\Desktop\francis_p_week1\obj\Debug\net6.0\francis_p_week1.pdb
+C:\Users\student\Desktop\francis_p_week1\obj\Debug\net6.0\francis_p_week1.genruntimeconfig.cache
+C:\Users\student\Desktop\francis_p_week1\obj\Debug\net6.0\ref\francis_p_week1.dll
