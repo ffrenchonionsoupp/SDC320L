@@ -17,4 +17,9 @@ public class FamilyContact : Contact
     {
         return base.GetInfo() + $"\nRelation: {Relation}";
     }
+
+    public override string GetPrintableText()   // Polymorphism
+    {
+        return base.GetPrintableText() + $"\nRelation: {Relation}";
+    }
 }

@@ -6,7 +6,7 @@
  *******************************************************/
 public class ContactBook
 {
-    public List<Contact> Contacts { get; set; }
+    public List<Contact> Contacts { get; set; } = new List<Contact>();
 
     public ContactBook()
     {

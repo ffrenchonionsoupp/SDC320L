@@ -17,4 +17,10 @@ public class FriendContact : Contact
     {
         return base.GetInfo() + $"\nNickname: {Nickname}";
     }
+
+    public override string GetPrintableText()   // Polymorphism
+    {
+        return base.GetPrintableText() + $"\nNickname: {Nickname}";
+    }
+
 }

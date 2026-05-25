@@ -17,4 +17,9 @@ public class BusinessContact : Contact
     {
         return base.GetInfo() + $"\nCompany: {Company}";
     }
+    
+    public override string GetPrintableText()   // Polymorphism
+    {
+        return base.GetPrintableText() + $"\nCompany: {Company}";
+    }
 }
