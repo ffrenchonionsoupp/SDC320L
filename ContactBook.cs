@@ -23,7 +23,7 @@ public class ContactBook
         foreach (var c in Contacts)
         {
             Console.WriteLine("----------------------------------");
-            Console.WriteLine(c.GetInfo());
+            Console.WriteLine(c.GetPrintableText());
         }
     }
 }

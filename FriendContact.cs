@@ -13,11 +13,6 @@ public class FriendContact : Contact
         Nickname = nickname;
     }
 
-    public override string GetInfo()
-    {
-        return base.GetInfo() + $"\nNickname: {Nickname}";
-    }
-
     public override string GetPrintableText()   // Polymorphism
     {
         return base.GetPrintableText() + $"\nNickname: {Nickname}";

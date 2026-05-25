@@ -13,11 +13,6 @@ public class FamilyContact : Contact
         Relation = relation;
     }
 
-    public override string GetInfo()
-    {
-        return base.GetInfo() + $"\nRelation: {Relation}";
-    }
-
     public override string GetPrintableText()   // Polymorphism
     {
         return base.GetPrintableText() + $"\nRelation: {Relation}";

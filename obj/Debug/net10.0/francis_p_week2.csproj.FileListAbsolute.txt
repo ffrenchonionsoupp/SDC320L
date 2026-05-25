@@ -1,0 +1,14 @@
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\obj\Debug\net10.0\francis_p_week2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\obj\Debug\net10.0\francis_p_week2.AssemblyInfoInputs.cache
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\obj\Debug\net10.0\francis_p_week2.AssemblyInfo.cs
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\obj\Debug\net10.0\francis_p_week2.csproj.CoreCompileInputs.cache
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\bin\Debug\net10.0\francis_p_week2.exe
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\bin\Debug\net10.0\francis_p_week2.deps.json
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\bin\Debug\net10.0\francis_p_week2.runtimeconfig.json
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\bin\Debug\net10.0\francis_p_week2.dll
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\bin\Debug\net10.0\francis_p_week2.pdb
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\obj\Debug\net10.0\francis_p_week2.dll
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\obj\Debug\net10.0\refint\francis_p_week2.dll
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\obj\Debug\net10.0\francis_p_week2.pdb
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\obj\Debug\net10.0\francis_p_week2.genruntimeconfig.cache
+C:\Users\franc\OneDrive - ECPI University\Software Development Classes\SDC320 + SDC 320L\320_source\francis_p_week2\obj\Debug\net10.0\ref\francis_p_week2.dll
