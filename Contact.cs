@@ -1,16 +1,31 @@
 /*******************************************************
  * Name: Francis Hampton
- * Date: 5/17/26
- * Purpose: Base class for all contact types.
+ * Date: 5/31/26
+ * Purpose: Abstract base class for all contacts.
+ * Demonstrates abstraction, constructors, and access control.
  *******************************************************/
-public class Contact : IPrintable   // Interface implemented here
+public abstract class Contact : IPrintable   // Interface implemented here
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    //Private fields (encapsulation)
+    private string _FirstName;
+    private sring _LastName;
+
+    //Public properties
+    public string FirstName
+    {
+        get => _FirstName;
+        protected set => _FirstName = value;
+    }
+    public string LastName
+     {
+        get => _LastName;
+        protected set => _LastName = value;
+    }
     public string Phone { get; set; }
     public string Email { get; set; }
 
-    public Contact(string first, string last, string phone, string email)
+    //Base constructor
+    protected Contact(string first, string last, string phone, string email)
     {
         FirstName = first;
         LastName = last;
@@ -18,8 +33,24 @@ public class Contact : IPrintable   // Interface implemented here
         Email = email;
     }
 
+    //Overloaded constructor
+    protected Contact(string first, string last)
+    {
+        FirstName = first;
+        LastName = last;
+        Phone = "Unknown";
+        Email = "Unknkown";
+    }
+
+    //Abstraction
+    public abstract string GetContactType();
+
+    //Polymorphism
     public virtual string GetPrintableText()
     {
-        return $"{FirstName} {LastName}\nPhone: {Phone}\nEmail: {Email}";
+        return $"{GetContactType()} Contact\n" +
+               $"{FirstName} {LastName}\n" +
+               $"Phone: {Phone}\n" +
+               $"Email: {Email}";
     }
 }

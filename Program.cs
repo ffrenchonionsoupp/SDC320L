@@ -1,21 +1,21 @@
-﻿/*******************************************************
+/*******************************************************
  * Name: Francis Hampton
- * Date: 5/24/2026
- * Purpose: Week 2 demonstration of interface, inheritance,
- *          composition, and polymorphism.
+ * Date: 5/31/2026
+ * Purpose: Week 3 demonstration of interface, inheritance,
+ *          composition, polymorphism, and now the introduction of abstraction.
  *******************************************************/
 public class Program
 {
     static void Main(string[] args)
     {
         Console.WriteLine("----------------------------------------------------");
-        Console.WriteLine("Week 2 Project - Friendly Faces");
+        Console.WriteLine("Week 3 Project - Friendly Faces");
         Console.WriteLine("Created by: Francis Hampton");
         Console.WriteLine("----------------------------------------------------");
         Console.WriteLine("Welcome! This application is currently under repair!");
-        Console.WriteLine("This is my week two deliverable!");
-        Console.WriteLine("This version of my application demonstrates inheritance, composition, interfaces, and polymorphism.");
-        Console.WriteLine();
+        Console.WriteLine("This is my week three deliverable!");
+        Console.WriteLine("This version of my application demonstrates abstraction, constructors,");
+        Console.WriteLine("access specifiers, and polymorphism.\n");
 
         // Composition: ContactBook contains Contact objects
         ContactBook book = new ContactBook();
@@ -29,16 +29,16 @@ public class Program
         book.AddContact(c2);
         book.AddContact(c3);
 
-        Console.WriteLine("Displaying contacts (polymorphism):\n");
+        Console.WriteLine("Displaying contacts (polymorphism & abstraction):\n");
         
         // Polymorphism: Each object uses its own override
-        foreach (var contact in book.Contacts)
+        foreach (var contact in book.GetAllContacts())
         {
             Console.WriteLine(contact.GetPrintableText());
             Console.WriteLine("----------------------------------");
         }
 
 
-        Console.WriteLine("\nEnd of Week 2 demonstration.");
+        Console.WriteLine("\nEnd of Week 3 demonstration.");
     }
 }

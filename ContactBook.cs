@@ -1,29 +1,14 @@
 /*******************************************************
  * Name: Francis Hampton
- * Date: 5/17/26
+ * Date: 5/31/26
  * Purpose: Demonstrates composition by containing a list
  *          of Contact objects.
  *******************************************************/
 public class ContactBook
 {
-    public List<Contact> Contacts { get; set; } = new List<Contact>();
+    private List<Contact> _contacts = new List<Contact>();
 
-    public ContactBook()
-    {
-        Contacts = new List<Contact>();
-    }
+    public void AddContact(Contact c) => _contacts.Add(c);
 
-    public void AddContact(Contact c)
-    {
-        Contacts.Add(c);
-    }
-
-    public void DisplayAll()
-    {
-        foreach (var c in Contacts)
-        {
-            Console.WriteLine("----------------------------------");
-            Console.WriteLine(c.GetPrintableText());
-        }
-    }
+    public List<Contact> GetAllContacts() => _contacts;
 }
