@@ -8,7 +8,7 @@ public abstract class Contact : IPrintable   // Interface implemented here
 {
     //Private fields (encapsulation)
     private string _FirstName;
-    private sring _LastName;
+    private string _LastName;
 
     //Public properties
     public string FirstName

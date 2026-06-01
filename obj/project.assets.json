@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\franc\\OneDrive - ECPI University\\Software Development Classes\\SDC320 + SDC 320L\\320_source\\francis_p_week2\\francis_p_week2.csproj",
-      "projectName": "francis_p_week2",
-      "projectPath": "C:\\Users\\franc\\OneDrive - ECPI University\\Software Development Classes\\SDC320 + SDC 320L\\320_source\\francis_p_week2\\francis_p_week2.csproj",
+      "projectUniqueName": "C:\\Users\\franc\\OneDrive - ECPI University\\Software Development Classes\\SDC320 + SDC 320L\\320_source\\francis_p_week3\\francis_p_week3.csproj",
+      "projectName": "francis_p_week3",
+      "projectPath": "C:\\Users\\franc\\OneDrive - ECPI University\\Software Development Classes\\SDC320 + SDC 320L\\320_source\\francis_p_week3\\francis_p_week3.csproj",
       "packagesPath": "C:\\Users\\franc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\franc\\OneDrive - ECPI University\\Software Development Classes\\SDC320 + SDC 320L\\320_source\\francis_p_week2\\obj\\",
+      "outputPath": "C:\\Users\\franc\\OneDrive - ECPI University\\Software Development Classes\\SDC320 + SDC 320L\\320_source\\francis_p_week3\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\franc\\AppData\\Roaming\\NuGet\\NuGet.Config"
