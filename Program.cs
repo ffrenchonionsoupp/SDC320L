@@ -1,44 +1,69 @@
-/*******************************************************
+/************************************************************
  * Name: Francis Hampton
- * Date: 5/31/2026
- * Purpose: Week 3 demonstration of interface, inheritance,
- *          composition, polymorphism, and now the introduction of abstraction.
- *******************************************************/
+ * Date: 6/7/2026
+ * Assignment: Friendly Faces – Week 4 Database Integration
+ * Purpose: Demonstrates SQLite CRUD + LINQ using ContactRecord.
+ ************************************************************/
+
+using System.Data.SQLite;
+using System.Linq;
+
 public class Program
 {
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
-        Console.WriteLine("----------------------------------------------------");
-        Console.WriteLine("Week 3 Project - Friendly Faces");
-        Console.WriteLine("Created by: Francis Hampton");
-        Console.WriteLine("----------------------------------------------------");
-        Console.WriteLine("Welcome! This application is currently under repair!");
-        Console.WriteLine("This is my week three deliverable!");
-        Console.WriteLine("This version of my application demonstrates abstraction, constructors,");
-        Console.WriteLine("access specifiers, and polymorphism.\n");
+        Console.WriteLine("\nWeek 4 – Friendly Faces Database Integration");
+        Console.WriteLine("Created by: Francis Hampton\n");
+        Console.WriteLine("This demo shows SQLite CRUD operations using your contact data.\n");
 
-        // Composition: ContactBook contains Contact objects
-        ContactBook book = new ContactBook();
+        const string dbName = "FriendlyFaces.db";
+        SQLiteConnection conn = SQLiteDatabase.Connect(dbName);
 
-        // Inheritance: Derived classes
-        Contact c1 = new BusinessContact("Maria", "Semple", "555-1234", "Maria@Putnam.com", "Putnam Publishing");
-        Contact c2 = new FamilyContact("Patty", "Hampton", "555-9876", "Patty@example.com", "Mom");
-        Contact c3 = new FriendContact("Francis", "Hampton", "555-2222", "Francis@example.com", "That's me!");
-
-        book.AddContact(c1);
-        book.AddContact(c2);
-        book.AddContact(c3);
-
-        Console.WriteLine("Displaying contacts (polymorphism & abstraction):\n");
-        
-        // Polymorphism: Each object uses its own override
-        foreach (var contact in book.GetAllContacts())
+        if (conn != null)
         {
-            Console.WriteLine(contact.GetPrintableText());
-            Console.WriteLine("----------------------------------");
+            ContactDB.CreateTable(conn);
+
+            // CREATE
+            ContactDB.AddContact(conn, new ContactRecord("Maria", "Semple", "555-1234", "Maria@Putnam.com", "Business", "Putnam Publishing"));
+            ContactDB.AddContact(conn, new ContactRecord("Patty", "Hampton", "555-9876", "Patty@example.com", "Family", "Mom"));
+            ContactDB.AddContact(conn, new ContactRecord("Francis", "Hampton", "555-2222", "mike@example.com", "Friend", "That's me!"));
+
+            // READ
+            Console.WriteLine("\nAll Contacts:");
+            var all = ContactDB.GetAllContacts(conn);
+            PrintContacts(all);
+
+            // LINQ: Filter by last name initial example 
+            Console.WriteLine("\nContacts with last name starting with 'H':");
+            var filtered = all.Where(c => c.LastName.StartsWith("H"));
+            PrintContacts(filtered.ToList());
+
+            // UPDATE
+            ContactRecord update = new ContactRecord(1, "Maria", "Semple", "555-0000", "Maria@Putnam.com", "Business", "Putnam Publishing");
+            ContactDB.UpdateContact(conn, update);
+
+            Console.WriteLine("\nUpdated Contact (ID 1):");
+            PrintContact(ContactDB.GetContact(conn, 1));
+
+            // DELETE
+            ContactDB.DeleteContact(conn, 3);
+
+            Console.WriteLine("\nContacts After Deleting ID 3:");
+            PrintContacts(ContactDB.GetAllContacts(conn));
         }
+    }
 
+    private static void PrintContacts(List<ContactRecord> contacts)
+    {
+        foreach (var c in contacts)
+            PrintContact(c);
+    }
 
-        Console.WriteLine("\nEnd of Week 3 demonstration.");
+    private static void PrintContact(ContactRecord c)
+    {
+        Console.WriteLine($"ID {c.ID}: {c.FirstName} {c.LastName} ({c.ContactType})");
+        Console.WriteLine($"Phone: {c.Phone}");
+        Console.WriteLine($"Email: {c.Email}");
+        Console.WriteLine($"Extra: {c.ExtraInfo}\n");
     }
 }
