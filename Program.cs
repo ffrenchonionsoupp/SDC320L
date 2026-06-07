@@ -1,4 +1,4 @@
-/************************************************************
+﻿/************************************************************
  * Name: Francis Hampton
  * Date: 6/7/2026
  * Assignment: Friendly Faces – Week 4 Database Integration
@@ -12,9 +12,14 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("\nWeek 4 – Friendly Faces Database Integration");
-        Console.WriteLine("Created by: Francis Hampton\n");
-        Console.WriteLine("This demo shows SQLite CRUD operations using your contact data.\n");
+        Console.WriteLine("----------------------------------------------------");
+        Console.WriteLine("Week 4 Project - Friendly Faces");
+        Console.WriteLine("Created by: Francis Hampton");
+        Console.WriteLine("----------------------------------------------------");
+        Console.WriteLine("Welcome! This application is currently under repair!");
+        Console.WriteLine("This is my week three deliverable!");
+        Console.WriteLine("This version of my application demonstrates This demo shows SQLite CRUD ");
+        Console.WriteLine("operations using your contact data.\n");
 
         const string dbName = "FriendlyFaces.db";
         SQLiteConnection conn = SQLiteDatabase.Connect(dbName);
@@ -26,7 +31,7 @@ public class Program
             // CREATE
             ContactDB.AddContact(conn, new ContactRecord("Maria", "Semple", "555-1234", "Maria@Putnam.com", "Business", "Putnam Publishing"));
             ContactDB.AddContact(conn, new ContactRecord("Patty", "Hampton", "555-9876", "Patty@example.com", "Family", "Mom"));
-            ContactDB.AddContact(conn, new ContactRecord("Francis", "Hampton", "555-2222", "mike@example.com", "Friend", "That's me!"));
+            ContactDB.AddContact(conn, new ContactRecord("Francis", "Hampton", "555-2222", "mike@example.com", "Friend", "That is me!"));
 
             // READ
             Console.WriteLine("\nAll Contacts:");

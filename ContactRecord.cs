@@ -30,5 +30,14 @@ public class ContactRecord
     }
 
     public ContactRecord(string first, string last, string phone, string email, string type, string extra)
-    {
+
+    {
+        FirstName = first;
+        LastName = last;
+        Phone = phone;
+        Email = email;
+        ContactType = type;
+        ExtraInfo = extra;
+    }
+}
        
