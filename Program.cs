@@ -5,8 +5,9 @@
  * Purpose: Implement a menu, fix bugs, and confirm ability to run
  ************************************************************/
 
+using System;
 using System.Data.SQLite;
-using System.Linq;
+using System.Collections.Generic;
 
 public class Program
 {
@@ -23,124 +24,230 @@ public class Program
         Console.WriteLine("composition, polymorphism, class constructors, access specifiers, and SQLite data storage.\n");
 
         const string dbName = "FriendlyFaces.db";
-        SQLiteConnection conn = SQLiteDatabase.Connect(dbName);
 
-        bool running = true;
-
-        while (running)
+        using (SQLiteConnection conn = new SQLiteConnection($"Data Source={dbName}"))
         {
-            Console.WriteLine("\nWhat would you like to do?");
-            Console.WriteLine("1. Add a new contact");
-            Console.WriteLine("2. View all contacts");
-            Console.WriteLine("3. Update a contact");
-            Console.WriteLine("4. Delete a contact");
-            Console.WriteLine("5. Quit");
-            Console.Write("Enter your choice: ");
+            conn.Open();
+            ContactDB.CreateTable(conn);
 
-            string choice = Console.ReadLine();
-            Console.WriteLine();
+            bool running = true;
 
-            switch (choice)
+            while (running)
             {
-                case "1":
-                    Console.WriteLine("What type of contact is this?");
-                    Console.WriteLine("1. Business");
-                    Console.WriteLine("2. Friend");
-                    Console.WriteLine("3. Family");
-                    Console.Write("Enter your choice: ");
-                    string typeChoice = Console.ReadLine();
+                Console.WriteLine("\nWhat would you like to do?");
+                Console.WriteLine("1. Add a new contact");
+                Console.WriteLine("2. View all contacts");
+                Console.WriteLine("3. Update a contact");
+                Console.WriteLine("4. Delete a contact");
+                Console.WriteLine("5. Quit");
+                Console.Write("Enter your choice: ");
 
-                    string contactType = "";
-                    string extraInfo = "";
+                string choice = Console.ReadLine();
+                Console.WriteLine();
 
-                    switch (typeChoice)
-                    {
-                        case "1":
-                            contactType = "Business";
-                            Console.Write("Enter the work info: ");
-                            extraInfo = Console.ReadLine();
-                            break;
+                switch (choice)
+                {
+                    case "1":
+                        AddContact(conn);
+                        break;
 
-                        case "2":
-                            contactType = "Friend";
-                            Console.Write("Enter the nickname: ");
-                            extraInfo = Console.ReadLine();
-                            break;
+                    case "2":
+                        ViewContacts(conn);
+                        break;
 
-                        case "3":
-                            contactType = "Family";
-                            Console.Write("Enter the relation: ");
-                            extraInfo = Console.ReadLine();
-                            break;
+                    case "3":
+                        UpdateContact(conn);
+                        break;
 
-                        default:
-                            Console.WriteLine("Invalid type. Returning to menu.");
-                            break;
-                    }
+                    case "4":
+                        DeleteContact(conn);
+                        break;
 
-                    Console.Write("Enter the contact's name: ");
-                    string name = Console.ReadLine();
+                    case "5":
+                        Console.WriteLine("Thanks for using Friendly Faces! Goodbye!");
+                        running = false;
+                        break;
 
-                    Console.Write("Enter the contact's phone number: ");
-                    string phone = Console.ReadLine();
-
-                    db.AddContact(name, phone, contactType, extraInfo);
-                    Console.WriteLine("Contact added successfully!");
-                    break;
-
-                case "2":
-                    var contacts = db.GetContacts();
-                    Console.WriteLine("Here are your friendly faces:");
-
-                    foreach (var c in contacts)
-                    {
-                        Console.WriteLine($"{c.Id}. {c.Name} — {c.Phone}");
-                    }
-                    break;
-
-                case "3":
-                    Console.Write("Enter the ID of the contact to update: ");
-                    int updateId = int.Parse(Console.ReadLine());
-
-                    Console.Write("Enter the new name: ");
-                    string newName = Console.ReadLine();
-
-                    Console.Write("Enter the new phone number: ");
-                    string newPhone = Console.ReadLine();
-
-                    db.UpdateContact(updateId, newName, newPhone);
-                    Console.WriteLine("Contact updated successfully!");
-                    break;
-
-                case "4":
-                    Console.Write("Enter the ID of the contact to delete: ");
-                    int deleteId = int.Parse(Console.ReadLine());
-
-                    db.DeleteContact(deleteId);
-                    Console.WriteLine("Contact deleted successfully!");
-                    break;
-
-                case "5":
-                    Console.WriteLine("Thanks for using Friendly Faces! Goodbye!");
-                    running = false;
-                    break;
-
-                default:
-                    Console.WriteLine("Oops! That wasn’t a valid choice. Try again.");
-                    break;
-            
-
-    private static void PrintContacts(List<ContactRecord> contacts)
-    {
-        foreach (var c in contacts)
-            PrintContact(c);
+                    default:
+                        Console.WriteLine("Oops! That wasn’t a valid choice. Try again.");
+                        break;
+                }
+            }
+        }
     }
 
-    private static void PrintContact(ContactRecord c)
+    // -----------------------------
+    // Add Contact
+    // -----------------------------
+    static void AddContact(SQLiteConnection conn)
     {
-        Console.WriteLine($"ID {c.ID}: {c.FirstName} {c.LastName} ({c.ContactType})");
-        Console.WriteLine($"Phone: {c.Phone}");
-        Console.WriteLine($"Email: {c.Email}");
-        Console.WriteLine($"Extra: {c.ExtraInfo}\n");
+        Console.WriteLine("What type of contact is this?");
+        Console.WriteLine("1. Business");
+        Console.WriteLine("2. Friend");
+        Console.WriteLine("3. Family");
+        Console.Write("Enter your choice: ");
+
+        string typeChoice = Console.ReadLine();
+        string contactType = "";
+        string extraInfo = "";
+
+        switch (typeChoice)
+        {
+            case "1":
+                contactType = "Business";
+                Console.Write("Enter the work info: ");
+                extraInfo = Console.ReadLine();
+                break;
+
+            case "2":
+                contactType = "Friend";
+                Console.Write("Enter the nickname: ");
+                extraInfo = Console.ReadLine();
+                break;
+
+            case "3":
+                contactType = "Family";
+                Console.Write("Enter the relation: ");
+                extraInfo = Console.ReadLine();
+                break;
+
+            default:
+                Console.WriteLine("Invalid type. Returning to menu.");
+                return;
+        }
+
+        Console.Write("Enter first name: ");
+        string first = Console.ReadLine();
+
+        Console.Write("Enter last name: ");
+        string last = Console.ReadLine();
+
+        Console.Write("Enter phone number: ");
+        string phone = Console.ReadLine();
+
+        Console.Write("Enter email address: ");
+        string email = Console.ReadLine();
+
+        ContactRecord c = new ContactRecord(first, last, phone, email, contactType, extraInfo);
+        ContactDB.AddContact(conn, c);
+
+        Console.WriteLine("Contact added successfully!");
+    }
+
+    // -----------------------------
+    // View Contacts
+    // -----------------------------
+    static void ViewContacts(SQLiteConnection conn)
+    {
+        List<ContactRecord> contacts = ContactDB.GetAllContacts(conn);
+
+        if (contacts.Count == 0)
+        {
+            Console.WriteLine("No contacts found.");
+            return;
+        }
+
+        Console.WriteLine("Here are your friendly faces:");
+        foreach (var c in contacts)
+        {
+            Console.WriteLine($"{c.ID}. {c.FirstName} {c.LastName} | {c.Phone} | {c.Email} | {c.ContactType} | {c.ExtraInfo}");
+        }
+    }
+
+    // -----------------------------
+    // Update Contact
+    // -----------------------------
+    static void UpdateContact(SQLiteConnection conn)
+    {
+        Console.Write("Enter the ID of the contact to update: ");
+        if (!int.TryParse(Console.ReadLine(), out int id))
+        {
+            Console.WriteLine("Invalid ID.");
+            return;
+        }
+
+        ContactRecord existing = ContactDB.GetContact(conn, id);
+
+        if (existing.ID == -1)
+        {
+            Console.WriteLine("Contact not found.");
+            return;
+        }
+
+        Console.WriteLine("Leave a field blank to keep the current value.");
+
+        Console.Write($"First Name ({existing.FirstName}): ");
+        string first = Console.ReadLine();
+        if (first == "") first = existing.FirstName;
+
+        Console.Write($"Last Name ({existing.LastName}): ");
+        string last = Console.ReadLine();
+        if (last == "") last = existing.LastName;
+
+        Console.Write($"Phone ({existing.Phone}): ");
+        string phone = Console.ReadLine();
+        if (phone == "") phone = existing.Phone;
+
+        Console.Write($"Email ({existing.Email}): ");
+        string email = Console.ReadLine();
+        if (email == "") email = existing.Email;
+
+        Console.WriteLine("Select the contact type:");
+        Console.WriteLine("1. Business");
+        Console.WriteLine("2. Friend");
+        Console.WriteLine("3. Family");
+        Console.Write($"Current Type ({existing.ContactType}): ");
+
+        string typeChoice = Console.ReadLine();
+        string contactType = existing.ContactType;
+        string extraInfo = existing.ExtraInfo;
+
+        if (typeChoice == "1")
+        {
+            contactType = "Business";
+            Console.Write("Enter the work info: ");
+            extraInfo = Console.ReadLine();
+        }
+        else if (typeChoice == "2")
+        {
+            contactType = "Friend";
+            Console.Write("Enter the nickname: ");
+            extraInfo = Console.ReadLine();
+        }
+        else if (typeChoice == "3")
+        {
+            contactType = "Family";
+            Console.Write("Enter the relation: ");
+            extraInfo = Console.ReadLine();
+        }
+
+        ContactRecord updated = new ContactRecord(id, first, last, phone, email, contactType, extraInfo);
+        ContactDB.UpdateContact(conn, updated);
+
+        Console.WriteLine("Contact updated successfully.");
+    }
+
+    // -----------------------------
+    // Delete Contact
+    // -----------------------------
+    static void DeleteContact(SQLiteConnection conn)
+    {
+        Console.Write("Enter the ID of the contact to delete: ");
+        if (!int.TryParse(Console.ReadLine(), out int id))
+        {
+            Console.WriteLine("Invalid ID.");
+            return;
+        }
+
+        ContactRecord existing = ContactDB.GetContact(conn, id);
+
+        if (existing.ID == -1)
+        {
+            Console.WriteLine("Contact not found.");
+            return;
+        }
+
+        ContactDB.DeleteContact(conn, id);
+        Console.WriteLine("Contact deleted successfully.");
     }
 }
