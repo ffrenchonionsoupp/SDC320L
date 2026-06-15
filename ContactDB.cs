@@ -1,10 +1,11 @@
 /************************************************************
  * Name: Francis Hampton
- * Date: 6/7/2026
+ * Date: 6/14/2026
  * Purpose: Handles CRUD operations for the Contacts table.
  ************************************************************/
 
 using System.Data.SQLite;
+using System.Collections.Generic;
 
 public class ContactDB
 {
@@ -20,41 +21,63 @@ public class ContactDB
         "ContactType TEXT," +
         "ExtraInfo TEXT);";
 
-        SQLiteCommand cmd = conn.CreateCommand();
-        cmd.CommandText = sql;
-        cmd.ExecuteNonQuery();
+        using (var cmd = new SQLiteCommand(sql, conn))
+        {
+            cmd.ExecuteNonQuery();
+        }
     }
 
     public static void AddContact(SQLiteConnection conn, ContactRecord c)
     {
-        string sql = string.Format(
-            "INSERT INTO Contacts (FirstName, LastName, Phone, Email, ContactType, ExtraInfo) " +
-            "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')",
-            c.FirstName, c.LastName, c.Phone, c.Email, c.ContactType, c.ExtraInfo);
+        string sql =
+        "INSERT INTO Contacts (FirstName, LastName, Phone, Email, ContactType, ExtraInfo) " +
+        "VALUES (@fn, @ln, @ph, @em, @type, @extra)";
 
-        SQLiteCommand cmd = conn.CreateCommand();
-        cmd.CommandText = sql;
-        cmd.ExecuteNonQuery();
+        using (var cmd = new SQLiteCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@fn", c.FirstName);
+            cmd.Parameters.AddWithValue("@ln", c.LastName);
+            cmd.Parameters.AddWithValue("@ph", c.Phone);
+            cmd.Parameters.AddWithValue("@em", c.Email);
+            cmd.Parameters.AddWithValue("@type", c.ContactType);
+            cmd.Parameters.AddWithValue("@extra", c.ExtraInfo);
+
+            cmd.ExecuteNonQuery();
+        }
     }
 
     public static void UpdateContact(SQLiteConnection conn, ContactRecord c)
     {
-        string sql = string.Format(
-            "UPDATE Contacts SET FirstName='{0}', LastName='{1}', Phone='{2}', Email='{3}', " +
-            "ContactType='{4}', ExtraInfo='{5}' WHERE ID={6}",
-            c.FirstName, c.LastName, c.Phone, c.Email, c.ContactType, c.ExtraInfo, c.ID);
+        string sql =
+        "UPDATE Contacts SET " +
+        "FirstName=@fn, LastName=@ln, Phone=@ph, Email=@em, " +
+        "ContactType=@type, ExtraInfo=@extra " +
+        "WHERE ID=@id";
 
-        SQLiteCommand cmd = conn.CreateCommand();
-        cmd.CommandText = sql;
-        cmd.ExecuteNonQuery();
+        using (var cmd = new SQLiteCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@fn", c.FirstName);
+            cmd.Parameters.AddWithValue("@ln", c.LastName);
+            cmd.Parameters.AddWithValue("@ph", c.Phone);
+            cmd.Parameters.AddWithValue("@em", c.Email);
+            cmd.Parameters.AddWithValue("@type", c.ContactType);
+            cmd.Parameters.AddWithValue("@extra", c.ExtraInfo);
+            cmd.Parameters.AddWithValue("@id", c.ID);
+
+            cmd.ExecuteNonQuery();
+        }
     }
+
 
     public static void DeleteContact(SQLiteConnection conn, int id)
     {
-        string sql = $"DELETE FROM Contacts WHERE ID={id}";
-        SQLiteCommand cmd = conn.CreateCommand();
-        cmd.CommandText = sql;
-        cmd.ExecuteNonQuery();
+        string sql = "DELETE FROM Contacts WHERE ID=@id";
+
+        using (var cmd = new SQLiteCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.ExecuteNonQuery();
+        }
     }
 
     public static List<ContactRecord> GetAllContacts(SQLiteConnection conn)
@@ -62,22 +85,21 @@ public class ContactDB
         List<ContactRecord> contacts = new List<ContactRecord>();
         string sql = "SELECT * FROM Contacts";
 
-        SQLiteCommand cmd = conn.CreateCommand();
-        cmd.CommandText = sql;
-
-        SQLiteDataReader rdr = cmd.ExecuteReader();
-
-        while (rdr.Read())
+        using (var cmd = new SQLiteCommand(sql, conn))
+        using (var rdr = cmd.ExecuteReader())
         {
-            contacts.Add(new ContactRecord(
-                rdr.GetInt32(0),
-                rdr.GetString(1),
-                rdr.GetString(2),
-                rdr.GetString(3),
-                rdr.GetString(4),
-                rdr.GetString(5),
-                rdr.GetString(6)
-            ));
+            while (rdr.Read())
+            {
+                contacts.Add(new ContactRecord(
+                    rdr.GetInt32(0),
+                    rdr.GetString(1),
+                    rdr.GetString(2),
+                    rdr.GetString(3),
+                    rdr.GetString(4),
+                    rdr.GetString(5),
+                    rdr.GetString(6)
+                ));
+            }
         }
 
         return contacts;
@@ -85,26 +107,30 @@ public class ContactDB
 
     public static ContactRecord GetContact(SQLiteConnection conn, int id)
     {
-        string sql = $"SELECT * FROM Contacts WHERE ID={id}";
+        string sql = "SELECT * FROM Contacts WHERE ID=@id";
 
-        SQLiteCommand cmd = conn.CreateCommand();
-        cmd.CommandText = sql;
-
-        SQLiteDataReader rdr = cmd.ExecuteReader();
-
-        if (rdr.Read())
+        using (var cmd = new SQLiteCommand(sql, conn))
         {
-            return new ContactRecord(
-                rdr.GetInt32(0),
-                rdr.GetString(1),
-                rdr.GetString(2),
-                rdr.GetString(3),
-                rdr.GetString(4),
-                rdr.GetString(5),
-                rdr.GetString(6)
-            );
+            cmd.Parameters.AddWithValue("@id", id);
+
+            using (var rdr = cmd.ExecuteReader())
+            {
+                if (rdr.Read())
+                {
+                    return new ContactRecord(
+                        rdr.GetInt32(0),
+                        rdr.GetString(1),
+                        rdr.GetString(2),
+                        rdr.GetString(3),
+                        rdr.GetString(4),
+                        rdr.GetString(5),
+                        rdr.GetString(6)
+                    );
+                }
+            }
         }
 
         return new ContactRecord(-1, "", "", "", "", "", "");
     }
+
 }

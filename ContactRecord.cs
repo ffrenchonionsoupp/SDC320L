@@ -1,6 +1,6 @@
 /************************************************************
  * Name: Francis Hampton
- * Date: 6/7/2026
+ * Date: 6/14/2026
  * Purpose: Represents a single row in the Contacts table.
  ************************************************************/
 
@@ -30,14 +30,16 @@ public class ContactRecord
     }
 
     public ContactRecord(string first, string last, string phone, string email, string type, string extra)
+    {
+        ID = -1; // Not assigned yet
+        FirstName = first;
+        LastName = last;
+        Phone = phone;
+        Email = email;
+        ContactType = type;
+        ExtraInfo = extra;
+    }
 
-    {
-        FirstName = first;
-        LastName = last;
-        Phone = phone;
-        Email = email;
-        ContactType = type;
-        ExtraInfo = extra;
-    }
+    public string DisplayName => $"{FirstName} {LastName}";
 }
        
